@@ -25,6 +25,7 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
@@ -64,6 +65,8 @@ import static de.robv.android.xposed.XposedHelpers.setStaticObjectField;
 
 	private static boolean disableResources = false;
 	private static final String[] XRESOURCES_CONFLICTING_PACKAGES = { "com.sygic.aura" };
+
+	static final List<String> BLACK_LIST = Arrays.asList("com.mokee.center", "com.mokee.pay");
 
 	private XposedInit() {}
 

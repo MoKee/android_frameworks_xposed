@@ -31,6 +31,11 @@ public interface IXposedHookLoadPackage extends IXposedMod {
 		}
 		@Override
 		public void handleLoadPackage(LoadPackageParam lpparam) throws Throwable {
+			for (String blockPackageName : XposedInit.BLACK_LIST) {
+				if (lpparam.packageName.contains(blockPackageName)) {
+					return;
+				}
+			}
 			instance.handleLoadPackage(lpparam);
 		}
 	}
