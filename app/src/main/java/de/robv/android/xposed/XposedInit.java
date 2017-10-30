@@ -26,11 +26,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.ref.WeakReference;
+import java.lang.reflect.Member;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -51,6 +54,7 @@ import static de.robv.android.xposed.XposedHelpers.findClass;
 import static de.robv.android.xposed.XposedHelpers.findFieldIfExists;
 import static de.robv.android.xposed.XposedHelpers.getBooleanField;
 import static de.robv.android.xposed.XposedHelpers.getObjectField;
+import static de.robv.android.xposed.XposedHelpers.getOverriddenMethods;
 import static de.robv.android.xposed.XposedHelpers.getParameterIndexByType;
 import static de.robv.android.xposed.XposedHelpers.setObjectField;
 import static de.robv.android.xposed.XposedHelpers.setStaticBooleanField;
@@ -352,6 +356,12 @@ import static de.robv.android.xposed.XposedHelpers.setStaticObjectField;
 					}
 				});
 			}
+		}
+
+		// Invalidate callers of methods overridden by XTypedArray
+		if (Build.VERSION.SDK_INT >= 24) {
+			Set<Method> methods = getOverriddenMethods(XResources.XTypedArray.class);
+			XposedBridge.invalidateCallersNative(methods.toArray(new Member[methods.size()]));
 		}
 
 		// Replace TypedArrays with XTypedArrays
