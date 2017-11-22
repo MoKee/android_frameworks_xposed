@@ -75,7 +75,7 @@ import static de.robv.android.xposed.XposedHelpers.setStaticObjectField;
 	private static boolean disableResources = false;
 	private static final String[] XRESOURCES_CONFLICTING_PACKAGES = { "com.sygic.aura" };
 
-	static final List<String> BLACK_LIST = Arrays.asList("com.mokee.center", "com.mokee.pay");
+	static final List<String> BLACKLISTED_APPLICATIONS = Arrays.asList("com.mokee.center", "com.mokee.pay", "com.icbc", "com.cmbchina.ccd.pluto.cmbActivity");
 
 	private XposedInit() {}
 
